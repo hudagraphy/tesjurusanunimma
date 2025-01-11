@@ -15,8 +15,11 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: const Color(0xFF19539D),
         colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: const Color(0xFF19539D),
           secondary: const Color(0xFFF3F3F3),
           tertiary: const Color(0xFFFFCD05),
+          surface: const Color(0xFF808285),
+          onSurface: const Color.fromARGB(255, 65, 63, 63),
         ),
         textTheme: GoogleFonts.poppinsTextTheme(
           Theme.of(context).textTheme,
