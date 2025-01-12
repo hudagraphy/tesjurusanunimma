@@ -10,7 +10,6 @@ class MainForm extends StatelessWidget {
     final tinggiLayar = MediaQuery.of(context).size.height;
     final paddingLayar =
         lebarLayar < 900 ? 8 / 100 * lebarLayar : 35 / 100 * lebarLayar;
-
     final _kunciForm = GlobalKey<FormBuilderState>();
     return Scaffold(
       //Container Utama
@@ -105,40 +104,7 @@ class MainForm extends StatelessWidget {
                       ),
                     ),
                     //genderUser
-                    Container(
-                      height: 75,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: ToggleButtons(
-                        color: Theme.of(context).colorScheme.surface,
-                        borderRadius: BorderRadius.circular(25),
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 15),
-                            child: Row(children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(15),
-                                child: Container(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  height: 50,
-                                  width: 50,
-                                ),
-                              ),
-                              Text('Perempuan')
-                            ]),
-                          ),
-                          Icon(Icons.car_crash_sharp)
-                        ],
-                        isSelected: [true, false],
-                        onPressed: (index) {},
-                      ),
-                    ),
+                    PilihGender(),
                   ],
                 ),
               ),
@@ -146,6 +112,115 @@ class MainForm extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class PilihGender extends StatefulWidget {
+  const PilihGender({
+    super.key,
+  });
+
+  @override
+  State<PilihGender> createState() => _PilihGenderState();
+}
+
+class _PilihGenderState extends State<PilihGender> {
+  int indexGender = 0;
+  List<bool> selections = [true, false];
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 75,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(25),
+      ),
+      child: LayoutBuilder(//agar bisa mengatur lebar ToggleButtons
+          builder: (context, constraints) {
+        return ToggleButtons(
+          borderRadius: BorderRadius.circular(25),
+          constraints: BoxConstraints.expand(
+              width: constraints.maxWidth / 2), // 2 = jumlah toggle button
+          renderBorder: false,
+          selectedColor: Theme.of(context).colorScheme.onSurface,
+         
+          fillColor: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+          isSelected: [true, false],
+          onPressed: (index) {
+            setState(() {
+              if (index == 0) {
+                selections = [true, false];
+              } else {
+                selections = [false, true];
+              }
+
+              indexGender = index;
+            });
+          },
+          children: [
+            //Gender Perempuan
+            Opacity(
+              opacity: indexGender == 0 ? 1 : 0.2,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Row(children: [
+                  //illustrasi gender perempuan
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      //color: Theme.of(context).colorScheme.primary,
+                      height: 60,
+                      width: 60,
+                      child: Image.asset(
+                        'assets/Gender_women.png',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      'Wanita',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ]),
+              ),
+            ),
+            //Gender Laki-laki
+            Opacity(
+              opacity: indexGender == 1 ? 1 : 0.2,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Row(children: [
+                  //illustrasi gender perempuan
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      //color: Theme.of(context).colorScheme.primary,
+                      height: 60,
+                      width: 60,
+                      child: Image.asset(
+                        'assets/Gender_men.png',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      'Pria',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ]),
+              ),
+            ),
+          ],
+        );
+      }),
     );
   }
 }

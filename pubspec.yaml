@@ -21,3 +21,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets\illustrasi\mainForm_Kenalan.png
+    - assets\Gender_men.png
+    - assets\Gender_women.png
