@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:intl/intl.dart';
 
 class MainForm extends StatelessWidget {
   const MainForm({super.key});
@@ -11,6 +13,29 @@ class MainForm extends StatelessWidget {
     final paddingLayar =
         lebarLayar < 900 ? 8 / 100 * lebarLayar : 35 / 100 * lebarLayar;
     final _kunciForm = GlobalKey<FormBuilderState>();
+
+    final List<String> kotaIndonesia = [
+      'Jakarta',
+      'Surabaya',
+      'Bandung',
+      'Medan',
+      'Bekasi',
+      'Tangerang',
+      'Depok',
+      'Semarang',
+      'Palembang',
+      'Makassar',
+      'Bogor',
+      'Batam',
+      'Pekanbaru',
+      'Malang',
+      'Padang',
+      'Denpasar',
+      'Samarinda',
+      'Tasikmalaya',
+      'Pontianak',
+      'Banjarmasin',
+    ];
     return Scaffold(
       //Container Utama
       body: FormBuilder(
@@ -86,29 +111,53 @@ class MainForm extends StatelessWidget {
                         ),
                         decoration: InputDecoration(
                           labelText: 'Nama lengkap kamu',
-                          labelStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.surface,
-                          ),
-                          floatingLabelBehavior: FloatingLabelBehavior.never,
-                          fillColor: Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withOpacity(0.2),
-                          filled: true,
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 25, vertical: 30),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                              borderSide: BorderSide.none),
                         ),
                       ),
                     ),
                     //genderUser
-                    PilihGender(
-                      onGenderDipilih: (index) {
-                        print("Selected gender index: $index");
-                      },
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: PilihGender(
+                        onGenderDipilih: (index) {
+                          print("Selected gender index: $index");
+                          _kunciForm.currentState!.setInternalFieldValue(
+                              'genderUser',
+                              index == 0 ? 'Perempuan' : 'Laki-laki');
+                        },
+                      ),
                     ),
+                    //tanggalLahirUser
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: FormBuilderDateTimePicker(
+                        name: 'tanggalLahirUser',
+                        inputType: InputType.date,
+                        format: DateFormat('dd/MM/yyyy'),
+                        decoration: InputDecoration(
+                          labelText: 'Tanggal lahir kamu',
+                        ),
+                      ),
+                    ),
+                    //Wilayah Domisili User (masih belum selesai)
+                    TypeAheadField(
+                      builder: (context, controller, focusNode) {
+                        return FormBuilderTextField(
+                          name: 'wilayahDomisiliUser',
+                          focusNode: focusNode,
+                          controller: controller,
+                          decoration: InputDecoration(
+                            labelText: 'Kota domisili kamu',
+                          ),
+                        );
+                      },
+                      onSelected: (value) {},
+                      suggestionsCallback: (search) {},
+                      itemBuilder: (context, suggestion) {
+                        return ListTile(
+                          title: Text('hdu'),
+                        );
+                      },
+                    )
                   ],
                 ),
               ),

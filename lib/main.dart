@@ -24,8 +24,22 @@ class MainApp extends StatelessWidget {
         textTheme: GoogleFonts.poppinsTextTheme(
           Theme.of(context).textTheme,
         ),
+        inputDecorationTheme: InputDecorationTheme(
+          labelStyle: TextStyle(
+            color: Colors.grey,
+            fontStyle: FontStyle.italic
+          ),
+          floatingLabelBehavior: FloatingLabelBehavior.never,
+          fillColor: Colors.blue.withOpacity(0.2),
+          filled: true,
+          contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 30),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25),
+            borderSide: BorderSide.none,
+          ),
+        ),
       ),
-      home: MainForm()
+      home: MainForm(),
     );
   }
 }
