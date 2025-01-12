@@ -104,7 +104,11 @@ class MainForm extends StatelessWidget {
                       ),
                     ),
                     //genderUser
-                    PilihGender(),
+                    PilihGender(
+                      onGenderDipilih: (index) {
+                        print("Selected gender index: $index");
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -119,7 +123,10 @@ class MainForm extends StatelessWidget {
 class PilihGender extends StatefulWidget {
   const PilihGender({
     super.key,
+    required this.onGenderDipilih,
   });
+
+  final Function(int) onGenderDipilih; //fungsi callbackData
 
   @override
   State<PilihGender> createState() => _PilihGenderState();
@@ -144,10 +151,10 @@ class _PilihGenderState extends State<PilihGender> {
           constraints: BoxConstraints.expand(
               width: constraints.maxWidth / 2), // 2 = jumlah toggle button
           renderBorder: false,
-          selectedColor: Theme.of(context).colorScheme.onSurface,
-         
-          fillColor: Theme.of(context).colorScheme.primary.withOpacity(0.2),
-          isSelected: [true, false],
+          //selectedColor: Theme.of(context).colorScheme.onSurface,
+          //fillColor: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+          isSelected: selections,
+
           onPressed: (index) {
             setState(() {
               if (index == 0) {
@@ -155,8 +162,8 @@ class _PilihGenderState extends State<PilihGender> {
               } else {
                 selections = [false, true];
               }
-
               indexGender = index;
+              widget.onGenderDipilih(indexGender); //fungsi callbackData
             });
           },
           children: [
